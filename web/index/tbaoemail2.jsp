@@ -5,17 +5,20 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link rel="stylesheet" href="/tester/icon/themify-icons-font/themify-icons/themify-icons.css">
+  
     <style>
      <%@ include file="/css/adminpage.css"%>
     </style>
     <script src="js/modal.js"></script> 
-</head>
+</head> 
 <body>
-    <div class="header">
-        <a href="/tester/Trangchu"> <img  src="/tester/anh/evn_icon.png" class="logo" > </a>
+    <section>
+        <div class="header">
+        <a href="/tester/Trangchu"> <img  src="/tester/anh/Artboard 2.png" class="logo"> </a>
         <nav class="nav-bar">
             <div class="button-nav">
                 <c:if test="${sessionScope.taikhoan.isAdmin == 1}">                     
@@ -28,13 +31,13 @@
                 <c:if test="${sessionScope.taikhoan != null}">         
                 <!--<button class="btn">    <a class="b1" href="#">Nhân viên:${sessionScope.taikhoan.user}</a>      </button>-->
                 <button class="btn">    <a class="b1" href="/tester/Logout">ĐĂNG XUẤT</a>      </button>
-                </c:if>
+                </c:if>                              
             </div>
         </nav>
         <c:if test="${sessionScope.taikhoan == null}">         
                   <div class="dk-dn2"> <a href="/tester/Login">ĐĂNG NHẬP</a> </div>
         </c:if>
-    </div>
+        </div>
     <div class="giua">
                   
         <center>
@@ -43,26 +46,49 @@
             </div>  
             <div class="giua">
                 <div class="modal-body">
-                <form action="/tester/GuiEmail" method="post" class="form1">
-                    <div class="themsp">
-                        <p>MÃ KH</p>
-                        <input name="txt1" value="${detail.maKH}"  readonly class="ip">
-                        <p>TÊN</p>
-                        <input name="txt2" value="${detail.ten}" type="text" class="ip">
-                        <P>SDT</p>
-                        <input name="txt3" value="${detail.sdt}" type="text" class="ip">   
-                        <p>ĐỊA CHỈ</p>
-                        <input name="txt4" value="${detail.dchi}"  type="text" class="ip">
-                        <p>EMAIL</p>
-                        <input name="txt5" value="${detail.email}"  type="text" class="ip">
-                        </div>
-                        <div class="modal-footer">
-                        <button  class="btn" id="luu" type="submit"><i class="ti-plus"> Lưu</i> </button>                             
+                <form action="/tester/SendEmailController?id=1" method="post" class="form1">
+                    <div style="display: flex; flex-direction: column; align-items: center;">
+                    <p style="margin-right: 50px;">Bắt đầu từ <input name="time1" type="datetime-local" id="from-date" style="margin-right: 25px;"/> tới <input name="time2" type="datetime-local" id="to-date" style="margin-left: 25px;"/></p>
+                    <p>Lí do <input name="reason" type="text" class="ip" style="width: 500px; margin-left: 20px;"></p>
+                    <p>Khu vực <input name="area" type="text" class="ip" style="width: 500px"></p>
                     </div>
+                </div>
+                <button  class="btn" id="luu" type="submit" style="float: none; background: none; color: white; "> Gửi </button>    
+                <div class="modal-footer">
+                                             
+                </div>  
                 </form> 
                 </div>
             </div>
         </center>
     </div>
+    </section>
+    
+    <script>
+        // Lấy các element input date
+        var fromInput = document.getElementById('from-date');
+        var toInput = document.getElementById('to-date');
+
+        // Đặt giá trị min cho to-input là from-input + 1 ngày
+        fromInput.addEventListener('change', function() {
+        var fromValue = new Date(fromInput.value);
+        var toValue = new Date(toInput.value);
+        var minDate = new Date(fromValue.getTime() + 86400000);
+        if (toValue < minDate) {
+            toInput.value = '';
+        }
+        toInput.min = minDate.toISOString().slice(0, 16);
+        });
+
+        // Kiểm tra nếu to-input < from-input thì reset giá trị
+        toInput.addEventListener('change', function() {
+        var fromValue = new Date(fromInput.value);
+        var toValue = new Date(toInput.value);
+        if (toValue < fromValue) {
+            toInput.value = '';
+        }
+        });
+
+    </script>
 </body>
 </html>

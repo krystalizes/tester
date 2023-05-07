@@ -7,10 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import model.Giohang;
 import model.Config;
 import model.Customer;
-import model.Sanpham;
 import model.Taikhoan;
 public class DAO {
 
@@ -201,6 +199,51 @@ public class DAO {
         }
         return list;
     }   
+    
+    public List<Customer> getCustomer() {
+        List<Customer> list = new ArrayList<>();
+        String query =  "SELECT customer.maKH, customer.ten, customer.sdt, customer.dchi, customer.email\n" +
+                        "FROM tester.customer\n" +
+                        "WHERE is_deleted=0;";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Customer(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
+    
+    public List<Customer> getCustomerNotPaid() {
+        List<Customer> list = new ArrayList<>();
+        String query =  "SELECT customer.maKH, customer.ten, customer.sdt, customer.dchi, customer.email, sodien.so, sodien.thang, sodien.tien\n" +
+                        "FROM tester.customer\n" +
+                        "INNER JOIN tester.sodien ON sodien.customerid = customer.maKH and is_deleted=0 and is_paid=0;" ;
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Customer(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getInt(8)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    } 
     public List<Customer> Baocao1(String date) {
         List<Customer> list = new ArrayList<>();
         String query =  "SELECT customer.maKH, customer.ten, customer.sdt, customer.dchi, customer.email, sodien.so, sodien.thang, sodien.tien\n" +

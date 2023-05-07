@@ -38,11 +38,13 @@
     <div class="giua">
                   
         <center>
-            <div class="tieude">
-                <h2><b>THÔNG BÁO EMAIL ĐẾN KHÁCH HÀNG</b></h2>               			
+            <div class="tieude" style="width: 100vw;">
+                <h2><b>CHỌN LOẠI THÔNG BÁO</b></h2>               			
             </div>  
-            <div class="giua">
-                <a class="b1" href="/tester/Tbaoemail2">THÔNG BÁO NGẮT ĐIỆN</a>
+            <div class="giua" style="width: 100vw;">    
+                <a class="b2" href="/tester/Tbaoemail2" style="margin-left: 0px;">THÔNG BÁO NGẮT ĐIỆN</a>
+                <a class="b2" href="/tester/SendEmailController?id=2">THÔNG BÁO ĐÓNG TIỀN ĐIỆN</a>
+                <a class="b2" href="/tester/SendEmailController?id=3">THÔNG BÁO NHẮC QUÁ HẠN ĐÓNG TIỀN ĐIỆN</a>
             </div>
         </center>
     </div>

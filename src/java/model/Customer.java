@@ -33,6 +33,13 @@ public class Customer {
         this.tien = tien;
     }
 
+   public Customer(int maKH, String ten, String sdt, String dchi, String email) {
+        this.maKH = maKH;
+        this.ten = ten;
+        this.sdt = sdt;
+        this.dchi = dchi;
+        this.email = email;
+    }
     public int getMaKH() {
         return maKH;
     }

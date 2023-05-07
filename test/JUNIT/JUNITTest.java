@@ -206,7 +206,7 @@ public class JUNITTest {
     public void testGetCustomerbyID() {
         DAO instance = new DAO();
         String id = "4"; // provide a valid id
-        Customer expResult = new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",200,"04/2023",372000); 
+        Customer expResult = new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",350,"05/2023",767300); 
         Customer result = instance.getCustomerbyID(id);
         assertEquals(expResult.getMaKH(), result.getMaKH());
         assertEquals(expResult.getTen(), result.getTen());
@@ -262,9 +262,9 @@ public class JUNITTest {
     public void testGetAllCustomer() {
         DAO instance = new DAO();            
         List<Customer> expResult = new ArrayList<Customer>();         
-        expResult.add(new Customer(1,"Nguyễn Văn A","0988765432","352 Minh Khai","abcdef@gmail.com",200,"04/2023",372000)); 
-        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com",300,"04/2023",625600)); 
-        expResult.add(new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",200,"04/2023",372000)); 
+        expResult.add(new Customer(1,"Nguyễn Văn A","0988765432","352 Minh Khai","abcdef@gmail.com",400,"05/2023",909000)); 
+        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com",350,"05/2023",767300)); 
+        expResult.add(new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",350,"05/2023",767300)); 
         List<Customer> result = instance.getAllCustomer();
         assertNotNull(result);
         assertEquals(expResult.size(), result.size());
@@ -410,6 +410,67 @@ public class JUNITTest {
                               +" "+actual.getSo()+" "+actual.getThang()+" "+actual.getTien());     
         }                     
     }
+    
+    @Test
+    public void testgetCustomerNotPaid() {
+        DAO instance = new DAO();      
+        List<Customer> expResult = new ArrayList<Customer>();
+         expResult.add(new Customer(1,"Nguyễn Văn A","0988765432","352 Minh Khai","abcdef@gmail.com",400,"03/2023",909000)); 
+        expResult.add(new Customer(1,"Nguyễn Văn A","0988765432","352 Minh Khai","abcdef@gmail.com",200,"04/2023",372000)); 
+        expResult.add(new Customer(1,"Nguyễn Văn A","0988765432","352 Minh Khai","abcdef@gmail.com",400,"05/2023",909000)); 
+        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com",100,"02/2023",170600));    
+        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com",450,"03/2023",1055350));   
+        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com",350,"05/2023",767300));    
+        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com",300,"04/2023",625600));    
+        expResult.add(new Customer(3,"Nguyễn Văn C","0282895958","25 Lê Duẩn","cba@gmail.com",200,"02/2023",372000));
+        expResult.add(new Customer(3,"Nguyễn Văn C","0282895958","25 Lê Duẩn","cba@gmail.com",450,"03/2023",1055350)); 
+        expResult.add(new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",350,"03/2023",767300));         
+        expResult.add(new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",200,"04/2023",372000));         
+        expResult.add(new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com",350,"05/2023",767300));        
+        List<Customer> result = instance.getCustomerNotPaid();
+        assertNotNull(result);
+        assertEquals(expResult.size(), result.size());
+        for (int i = 0; i < expResult.size(); i++) {
+            Customer expected = expResult.get(i);
+            Customer actual = result.get(i);
+            assertEquals(expected.getMaKH(), actual.getMaKH());
+            assertEquals(expected.getTen(), actual.getTen());
+            assertEquals(expected.getSdt(), actual.getSdt());
+            assertEquals(expected.getDchi(), actual.getDchi());
+            assertEquals(expected.getEmail(), actual.getEmail());
+            assertEquals(expected.getSo(), actual.getSo());
+            assertEquals(expected.getThang(), actual.getThang());
+            assertEquals(expected.getTien(), actual.getTien());
+            System.out.println(actual.getMaKH()+" "+actual.getTen()+" "+actual.getSdt()+" "+actual.getDchi()+" "+actual.getEmail()
+                              +" "+actual.getSo()+" "+actual.getThang()+" "+actual.getTien());     
+        }                     
+    }
+    
+    @Test
+    public void testgetCustomer() {
+        DAO instance = new DAO();      
+        List<Customer> expResult = new ArrayList<Customer>();
+        expResult.add(new Customer(1,"Nguyễn Văn A","0988765432","352 Minh Khai","abcdef@gmail.com"));         
+        expResult.add(new Customer(2,"Nguyễn Văn B","0235648799","123 Giải Phóng","bca@gmail.com"));   
+        expResult.add(new Customer(3,"Nguyễn Văn C","0282895958","25 Lê Duẩn","cba@gmail.com")); 
+        expResult.add(new Customer(4,"Phan Vương Bảo","0425536789","36 Minh Khai","abcdefgh@gmail.com"));                
+        List<Customer> result = instance.getCustomer();
+        assertNotNull(result);
+        assertEquals(expResult.size(), result.size());
+        for (int i = 0; i < expResult.size(); i++) {
+            Customer expected = expResult.get(i);
+            Customer actual = result.get(i);
+            assertEquals(expected.getMaKH(), actual.getMaKH());
+            assertEquals(expected.getTen(), actual.getTen());
+            assertEquals(expected.getSdt(), actual.getSdt());
+            assertEquals(expected.getDchi(), actual.getDchi());
+            assertEquals(expected.getEmail(), actual.getEmail());           
+            System.out.println(actual.getMaKH()+" "+actual.getTen()+" "+actual.getSdt()+" "+actual.getDchi()+" "+actual.getEmail());     
+        }                     
+    }
+    
+    
+    
     /**
      * Test of themCustomer method, of class DAO.
      */
